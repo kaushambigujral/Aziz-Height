@@ -147,7 +147,8 @@ function calculateRouteFromAtoB(platform) {
 
   var vehicleMarker;
   function addVehicleMarker(lat, lng){
-    vehicleMarker = new H.map.Marker({ lat: lat, lng: lng });
+    var vehicleIcon = new H.map.Icon("/images/truck.svg");
+    vehicleMarker = new H.map.Marker({ lat: lat, lng: lng }, {icon: vehicleIcon});
     map.addObject(vehicleMarker);
   }
 

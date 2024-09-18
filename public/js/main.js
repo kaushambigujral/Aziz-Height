@@ -25,7 +25,7 @@ function calculateRouteFromAtoB(platform) {
     alert('Can\'t reach the remote server');
   }
 
-  var mapContainer = document.getElementById('map');
+  var mapContainer1 = document.getElementById('map');
   var platform = new H.service.Platform({
     apikey: JSON.parse(document.querySelector('#api-key').value).apiKey //pulling it from env
   });
@@ -33,7 +33,7 @@ function calculateRouteFromAtoB(platform) {
   var defaultLayers = platform.createDefaultLayers();
   
   // Step 2: initialize a map - this map is centered over Berlin
-  var map = new H.Map(mapContainer,
+  var map = new H.Map(mapContainer1,
     defaultLayers.vector.normal.map, {
     center: {lat: 52.5160, lng: 13.3779},
     zoom: 13,
@@ -188,7 +188,11 @@ function calculateRouteFromAtoB(platform) {
 
   var vehicleLat = 52.51670 , vehicleLng = 13.385580;
   var origLat = 52.5160, origLng = 13.3779;
-  addVehicleMarker(vehicleLat, vehicleLng);
-  simulateVehicleMovement(origLat, origLng, vehicleLat, vehicleLng);
+  addVehicleMarker(origLat, origLng);
+
+  $(document).on("click", "#simulate1", (event) => {
+    simulateVehicleMovement(origLat, origLng);
+})
+  
 
   

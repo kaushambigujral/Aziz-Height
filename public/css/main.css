@@ -83,6 +83,9 @@ nav{
     border-color: #fe4235;
     background-color: #fe4235;
 }
+.space{
+    padding: 0 25px;
+}
 
 #navbarTogglerDemo01{
     justify-content: space-between;
@@ -93,7 +96,7 @@ li.nav-item{
 }
 
 
-#map {
+#map, #map2 {
     display: block;
     width: 80%;
     margin-bottom: 3px;
@@ -101,9 +104,17 @@ li.nav-item{
     background: grey;
 }
 
-.mapContainer{
+.mapContainer, .mapContainer2{
     padding-top: 20px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     height: 100vh;
+    align-items: center
+}
+
+.demoText{
+    display: flex;
+    flex-direction: row;
+    padding: 1rem;
 }

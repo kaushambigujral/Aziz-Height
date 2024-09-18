@@ -118,19 +118,37 @@ function calculateRouteFromAtoB(platform) {
     });
   }
 
-  function addBridgeMarker(){
+  function addBridgeMarker(latitude, longitude){
     var bridgeIcon = new H.map.Icon("/images/bridge.svg", {anchor: {x:8, y:8}});
     var marker = new H.map.Marker({
-        lat: 52.52030, 
-        lng: 13.38516},
+        lat: latitude, 
+        lng: longitude},
         {icon: bridgeIcon});
     
         map.addObject(marker);
       
   }
+
+  function addGeofence(latitude, longitude){
+    map.addObject(new H.map.Circle(
+      {lat:latitude, lng:longitude},
+      50,
+      {
+        style: {
+            strokeColor: 'rgba(55, 85, 170, 0.6)', // Color of the perimeter
+            lineWidth: 2,
+            fillColor: 'rgba(0, 128, 0, 0.7)' 
+        }
+      }
+    ));
+  }
   
   calculateRouteFromAtoB(platform);
-  addBridgeMarker();
+  //addBridgeMarker(52.52050, 13.38536);
+  var lat = 52.51900
+  lng = 13.38520;
+  addBridgeMarker(lat, lng);
+  addGeofence(lat - 0.00010, lng + 0.00010);
 
 
   

@@ -129,8 +129,9 @@ function calculateRouteFromAtoB(platform) {
       
   }
 
+  var geofence;
   function addGeofence(latitude, longitude){
-    map.addObject(new H.map.Circle(
+    geofence = new H.map.Circle(
       {lat:latitude, lng:longitude},
       50,
       {
@@ -140,15 +141,36 @@ function calculateRouteFromAtoB(platform) {
             fillColor: 'rgba(0, 128, 0, 0.7)' 
         }
       }
-    ));
+    )
+    map.addObject(geofence);
   }
-  
+
+  var vehicleMarker;
+  function addVehicleMarker(lat, lng){
+    vehicleMarker = new H.map.Marker({ lat: lat, lng: lng });
+    map.addObject(vehicleMarker);
+  }
+
+  function simulateVehicleMovement(lat, lng){
+    let interval = setInterval(function() {
+      lat += 0.0001;
+      vehicleMarker.setGeometry({ lat: lat + 0.0001, lng: lng});
+      console.log(lat + " " + lng);
+      if(lat > 52.51730000000002){
+        alert("Bridge Incoming!!");
+        clearInterval(interval);
+      }
+  }, 1000);
+    }
+ 
   calculateRouteFromAtoB(platform);
-  //addBridgeMarker(52.52050, 13.38536);
-  var lat = 52.51900
-  lng = 13.38520;
+  var lat = 52.51800
+  lng = 13.385510;
   addBridgeMarker(lat, lng);
   addGeofence(lat - 0.00010, lng + 0.00010);
 
+  var vehicleLat = 52.51670 , vehicleLng = 13.385580;
+  addVehicleMarker(vehicleLat, vehicleLng);
+  simulateVehicleMovement(vehicleLat, vehicleLng);
 
   

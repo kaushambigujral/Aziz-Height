@@ -91,3 +91,18 @@ nav{
 li.nav-item{
     padding: 0 0.5rem;
 }
+
+
+#map {
+    display: block;
+    width: 80%;
+    margin-bottom: 3px;
+    height: 450px;
+    background: grey;
+}
+
+.mapContainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

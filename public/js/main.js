@@ -71,10 +71,7 @@ function calculateRouteFromAtoB(platform) {
           strokeColor: 'rgba(0, 128, 255, 0.7)'
         }
       });
-  
-      // Add the polyline to the map
       map.addObject(polyline);
-      // And zoom to its bounding rectangle
       map.getViewModel().setLookAtData({
         bounds: polyline.getBoundingBox()
       });
@@ -99,7 +96,6 @@ function calculateRouteFromAtoB(platform) {
       // Add a marker for each maneuver
       for (i = 0; i < actions.length; i += 1) {
         let action = actions[i];
-        console.log(poly[action.offset * 3] + " " + poly[action.offset * 3 + 1]);
         var marker = new H.map.Marker({
           lat: poly[action.offset * 3],
           lng: poly[action.offset * 3 + 1]},
@@ -152,17 +148,37 @@ function calculateRouteFromAtoB(platform) {
     map.addObject(vehicleMarker);
   }
 
-  function simulateVehicleMovement(lat, lng){
+  function simulateVehicleMovement(lat0, lng0){
+    var lat = lat0;
+    var lng = lng0;
+    var changeDir = false;
+    var stop = false;
+
     let interval = setInterval(function() {
-      lat += 0.0001;
-      vehicleMarker.setGeometry({ lat: lat + 0.0001, lng: lng});
-      console.log(lat + " " + lng);
-      if(lat > 52.51730000000002){
-        alert("Bridge Incoming!!");
-        clearInterval(interval);
+      if(!changeDir){
+        lng += 0.0001;
+        lat += 0.000007;
       }
-  }, 1000);
+      else{
+        lat += 0.00005;
+      }
+
+      if(!stop)
+        vehicleMarker.setGeometry({ lat: lat + 0.0001, lng: lng});
+      console.log(lat + " " + lng);
+      if(lat > 52.51653899999973 && lng > 13.385599999999982){
+        changeDir = true;
+        console.log("Change Dir");
+      }
+      if(lat > 52.51740000000002){
+        stop = true;
+        console.log("Stop!!!");
+        clearInterval(interval);
+        alert("Bridge Incoming!!");
+      }
+  }, 100);
     }
+
  
   calculateRouteFromAtoB(platform);
   var lat = 52.51800
@@ -171,7 +187,8 @@ function calculateRouteFromAtoB(platform) {
   addGeofence(lat - 0.00010, lng + 0.00010);
 
   var vehicleLat = 52.51670 , vehicleLng = 13.385580;
+  var origLat = 52.5160, origLng = 13.3779;
   addVehicleMarker(vehicleLat, vehicleLng);
-  simulateVehicleMovement(vehicleLat, vehicleLng);
+  simulateVehicleMovement(origLat, origLng, vehicleLat, vehicleLng);
 
   
